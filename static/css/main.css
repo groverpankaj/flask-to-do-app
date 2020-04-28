@@ -1,0 +1,135 @@
+.heading {
+  color: #002e6d;
+}
+
+.light {
+  opacity: 0.2;
+}
+
+.daterow {
+  padding-left: 15px;
+  background-color: #dee2e6;
+  font-weight: bold;
+}
+
+.action-left {
+  float: left;
+  width: 30%;
+}
+
+.action-right {
+  float: right;
+  width: 30%;
+}
+
+.column-priority {
+  width: 5%;
+  text-align: center;
+}
+
+.column-right {
+  width: 20%;
+  text-align: center;
+}
+
+.marginTopBottom20 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.banner {
+  position: fixed;
+  top: 0;
+  background-color: #ffffff;
+  width: 50%;
+  z-index: 90;
+}
+
+.new-task {
+  height: 100px;
+  padding-top: 12px;
+  box-shadow: 0 11px 13px 0 rgba(0, 0, 0, 0.04);
+  border: solid 1px #dbdada;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+
+.heading-row {
+  background-color: #4285f4;
+  color: #ffffff;
+}
+
+.tableDiv {
+  margin-top: 220px;
+}
+
+del {
+  color: green;
+}
+
+.closeBtn {
+  font-weight: bold;
+  position: fixed;
+  top: 5px;
+  right: 5px;
+}
+
+.credit {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+}
+
+.alert-light {
+  border: 0; 
+  text-align: right;
+}
+
+.alert {
+  margin-bottom: 0px;
+  padding: 5px;
+}
+
+.priorityCol {
+  padding-top: 5px;
+  padding-left: 20px;
+  float: left;
+}
+
+.alertCol {
+  float: right;
+  padding-right: 50px;
+  color: #0c5460
+}
+
+@media only screen and (max-width: 992px) {
+  .banner {
+    width: 90%;
+    left: 5%;
+  }
+  .new-task {
+    padding-top: 0px;
+    height: 160px;
+  }
+  .tableDiv {
+    margin-top: 270px;
+    width: 90%;
+    margin-left: 5%;
+  }
+  .date-input {
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  .priorityCol {
+    float: left;
+    padding-left: 5px;
+  }
+  
+  .alertCol {
+    padding-right: 10px;
+  }
+
+}
+

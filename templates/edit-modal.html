@@ -1,0 +1,59 @@
+{% extends "boot.html" %}
+
+
+{% block innercontent %}
+
+{% include('table.html') %}
+
+
+<!-- Button trigger modal --><!-- JS used to trigger it open automatically -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="ppp">
+  Open Modal 
+</button> -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="5" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><b>Edit Task</b></h5>
+       
+        <a class="btn closeBtn" href="/{{pstatus}}" role="button"><span aria-hidden="true">&times;</span></a>
+ 
+      </div>
+      <div class="modal-body">
+        {% for task in tasks %}
+          {% if task.id == id %}
+          <form action="/edit/{{task.id}}/{{pstatus}}" method="POST">
+          
+            <div class="row">
+              <div class= "col-md-6">
+                <input type="text" value="{{task.content}}" name="content" class="form-control" autocapitalize="off" />
+              </div>
+              <div class= "col-md-6">
+                <div class='input-group date' id="datetimepicker2">
+                  <input type='text' class="form-control" name="finishdate"
+                    value="{{(task.finish_date).strftime("%m/%d/%Y %I:%M %p")}}" autocomplete="off" />
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="modal-footer" style="text-align: left;">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal" href="/">Close</button> -->
+        <button type="submit" class="btn btn-primary">Edit task</button>
+        <a class="btn" href="/{{pstatus}}" role="button">Close</a>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

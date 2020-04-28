@@ -1,0 +1,7 @@
+env/
+build/
+dist/
+token.json
+Procfile
+client_secret.json
+__pycache__

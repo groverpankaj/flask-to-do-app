@@ -1,0 +1,171 @@
+<div class="content">
+
+  <!-- Banner -->
+  <div class="banner">
+    <div class="text-center heading">
+      <h1>To Do List</h1>
+    </div>
+
+    <!-- New Task Form -->
+    <div class="row new-task">
+      <form action="/{{pstatus}}" method="POST" class="form-group marginTopBottom20">
+
+        <div class="col-md-6">
+          <input type="text" name="content" id="content" class="form-control" minlength="3" placeholder="New Task"
+            autocomplete="off" />
+        </div>
+
+        <div class="col-md-4  date-input">
+          <div class='input-group date' id="datetimepicker1">
+            <input type='text' class="form-control" name="finishdate" value="{{today}}" />
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+        </div>
+
+
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary">Add Task</button>
+        </div>
+
+      </form>
+    </div> <!-- row new-task -->
+
+    <div class="row">
+    <div class="col priorityCol">
+      {% if (pstatus == 'all') %}
+      <input name="showPriority" type="checkbox" id="priorityCheck" />  
+      {% else %}
+      <input name="showPriority" type="checkbox" id="priorityCheck" checked/> 
+      {% endif %}
+       Show Priority Tasks
+    </div>
+
+    <div class="col alertCol">
+      {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-light" id="success-alert">
+            {{ message }}
+          </div>
+          {% endfor %}
+        {% endif %}
+
+      {% endwith %}
+    </div>
+
+  </div>
+
+  </div> <!-- End of banner -->
+
+  
+
+  <div class="tableDiv">
+
+    
+    <table class="table">
+      <thead class="heading-row">
+        <tr>
+          <th>Priority</th>
+          <th>Task</th>
+          <th class="column-right">Time</th>
+          <th class="column-right">Completed</th>
+          <th class="column-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% set ns = namespace(dt=0) %}
+        <!-- Initial assignment -->
+
+        {% for task in tasks %}
+
+        {% set newdt = task.finish_date.strftime('%A %b %d, %Y')  %}
+
+        {% if (newdt != ns.dt) %}
+        <!-- new date is different from previous date -->
+        <tr class="daterow">
+          <td colspan="5">
+            {{newdt}}
+          </td>
+        </tr>
+        {% set ns.dt = newdt %}
+        {% endif %}
+
+        <tr>
+          <td class="column-priority">
+            <!-- Task Status -->
+            {% if (task.priority == True) %}
+            <a href="/priority/no/{{task.id}}/{{pstatus}}"><span class="fas fa-star" data-toggle="tooltip" data-placement="top" title="High Priority"></span></a>
+            {% else %}
+            <a href="/priority/yes/{{task.id}}/{{pstatus}}"><span class="far fa-star" data-toggle="tooltip" data-placement="top" title="Low Priority"></span></a>
+            {% endif %}
+          </td>
+          <td>
+            <!-- Task Content -->
+            {% if (task.completed == True) %}
+            <del>{{ task.content }}</del>
+            {% else %}
+            <span>{{ task.content }}</span>
+            {% endif %}
+          </td>
+          <td class="text-center">
+            <!-- Task Time -->
+            {% if (task.completed == True) %}
+            <del>{{ task.finish_date.strftime('%I:%M %p')  }}</del>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- No hourglass is displayed when task is completed -->
+            {% else %}
+            <span>{{ task.finish_date.strftime('%I:%M %p')  }}</span>
+
+            {% set diff = ((task.finish_date - nowDt).total_seconds())/60  %}
+            <!-- Time Difference -->
+
+            {% if (diff < 0) %}
+            &nbsp;&nbsp;<span class="fas fa-hourglass-end" data-toggle="tooltip" data-placement="top" title="Time is up"
+              style="color: red"></span>
+            {% else %}
+            &nbsp;&nbsp;<span class="fas fa-hourglass-start" data-toggle="tooltip" data-placement="top"
+              title="Still got time"></span>
+            {% endif %}
+
+            {% endif %}
+          </td>
+          <td class="text-center">
+            <!-- Task Status -->
+            {% if (task.completed == True) %}
+            <input type="checkbox" id={{task.id}} class="completeNo" checked>
+            {% else %}
+            <input type="checkbox" id={{task.id}} class="completeYes">
+            {% endif %}
+          </td>
+          <td class="text-center">
+            <!-- Task Action -->
+            {% if (task.completed != True) %}
+            <!-- show only is task is not completed -->
+            <div class="action-left">
+              <a data-toggle="tooltip" data-placement="top" title="Edit the task" href="/edit/{{task.id}}/{{pstatus}}"><span
+                  class="fas fa-pencil-alt"></span></a>
+            </div>
+            {% endif %}
+            <div class="action-right">
+              <a data-toggle="tooltip" data-placement="top" title="Delete the task" href="/delete/{{task.id}}/{{pstatus}}"><span class="fas fa-trash"></span></a>
+            </div>
+            <div class="action-right">
+              <a data-toggle="tooltip" data-placement="top" title="Add to Calender" href="/calender/{{task.id}}/{{pstatus}}"><span class="fas fa-calendar-plus"></span></a>
+            </div>
+          </td>
+        </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+  </div> <!-- tableDiv -->
+
+  <div class="credit">
+    <i class="far fa-copyright"></i>
+    <a href="https://www.linkedin.com/in/pgrover9/" target="_blank">Pankaj Grover</a>
+  </div>
+
+</div> <!-- content -->

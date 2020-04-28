@@ -1,0 +1,135 @@
+{% extends "bootstrap/base.html" %}
+<!-- Default bootstrap -->
+
+
+<head>
+  {% block head %}
+
+  <title>{% block title %}To Do List{% endblock %}</title>
+  <meta name="google-site-verification" content="pICxXuhcUQxPRec_r5miGhg-5sldJTcVi9DHE6cPChU" />
+
+  {% block head_js %}
+  <!-- For Bootstrap Datepicker -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  {% endblock head_js %}
+
+
+
+  {% block styles %}
+  {{super()}}
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="{{url_for('.static', filename='css/main.css')}}">
+  <!-- Font awersome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <!-- Bootstrap Datepicker -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.4/css/bootstrap-datetimepicker.css">
+  {% endblock %}
+
+  {% endblock %}
+</head>
+
+</head>
+
+
+
+<body>
+
+  {% block content %}
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    {% block innercontent %}
+    {% endblock %}
+  </div>
+  <div class="col-md-3"></div>
+
+
+  {% endblock %}
+
+  
+
+
+
+  {% block scripts %}
+  {{ super() }}
+  <!-- For Bootstrap Datepicker -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.4/js/bootstrap-datetimepicker.min.js"></script>
+
+  <script>
+    // Activate Bootstrap Tooltip
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+
+    // For Datepicker
+    var nowDate = new Date();
+    var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
+
+    // In index.html
+    $(function () {
+      $('#datetimepicker1').datetimepicker({
+        minDate: new Date(),
+        autoclose: true
+      })
+
+      // In edit.html
+      $('#datetimepicker2').datetimepicker({
+        minDate: new Date(),
+        autoclose: true
+      })
+    });
+
+    // Status Checkbox Click event
+    $(".completeNo").click(function (event) {
+      
+      let id = event.target.id;
+      let pstatusTarget = document.getElementById("priorityCheck");
+
+      if (pstatusTarget.checked) {
+        window.location.href = `/complete/no/${id}/onlypriority`
+      } else {
+        window.location.href = `/complete/no/${id}/all`
+      }
+
+    });
+
+    $(".completeYes").click(function (event) {
+      
+      let id = event.target.id;
+      let pstatusTarget = document.getElementById("priorityCheck");
+
+      if (pstatusTarget.checked) {
+        window.location.href = `/complete/yes/${id}/onlypriority`
+      } else {
+        window.location.href = `/complete/yes/${id}/all`
+      }
+
+    });
+
+
+    $(window).on('load',function(){
+        $('#exampleModal').modal('show');
+    });
+
+    $("#priorityCheck").click( event => {
+      if (event.target.checked) {
+        window.location.href = `/onlypriority`
+      } else {
+        window.location.href = `/all`
+      }
+    })
+
+    // Flash message auto close
+    $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $("#success-alert").slideUp(500);
+    });
+
+
+  </script>
+
+
+
+  {% endblock scripts %}
+  
+</body>
